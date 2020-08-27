@@ -51,3 +51,55 @@ export const Timeout = (callback: Function, count: number) => {
   };
   loop();
 };
+
+export class LimitArray {
+  length: number = 0;
+  line: number = 0;
+  array: Array<any> = [];
+  constructor(len: number) {
+    this.length = len;
+    this.array = new Array(len).fill([]);
+  }
+  push: Function = (x: number, line: number) => {
+    const delta = line - this.line;
+    const range = [x - this.length, x + this.length];
+    if (delta >= this.length) {
+      this.array = new Array(this.length).fill([]);
+    } else {
+      this.array = this.array.slice(delta).concat(new Array(delta).fill([]))
+    }
+
+    this.array.map(item => {
+      item.push(range);
+      return item;
+    });
+
+    this.line = line;
+  }
+  calcCover: Function = (x: number, line: number) => {
+    const delta = line - this.line;
+    if (delta >= this.length) {
+      return false;
+    }
+
+    for (let lineRanges of this.array) {
+      if (lineRanges.find((item: number[]) => {
+        const min = item[0];
+        const max = item[1] || min;
+        return x >= min && x <=max; 
+      })) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  isCover: Function = (x: number, line: number) => {
+    const result = this.calcCover(x, line);
+    if (!result) {
+      this.push(x, line);
+    }
+
+    return result;
+  }
+}
