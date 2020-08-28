@@ -27,6 +27,11 @@ export default [
         path: '/daily/20200824',
         name: 'fontShow',
         component: './200824CanvasFont/async'
+      },
+      {
+        path: '/daily/20200828',
+        name: 'ellipsisText',
+        component: './200828EllipsisText'
       }
     ]
   },

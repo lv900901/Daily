@@ -3,6 +3,7 @@ export default {
   'menu.more-blocks': '更多区块',
   'menu.daily': 'Daily',
   'menu.daily.fontShow': '200824-字体渐显',
+  'menu.daily.ellipsisText': '200828-超长文本显示',
   'menu.home': '首页',
   'menu.admin': '管理页',
   'menu.admin.sub-page': '二级管理页',
