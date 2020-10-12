@@ -1,0 +1,19 @@
+.item {
+  background-color: #fff;
+  padding: 12px 8px;
+  animation: slideIn 0.4s linear 0;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(120px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

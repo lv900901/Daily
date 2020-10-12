@@ -32,6 +32,16 @@ export default [
         path: '/daily/20200828',
         name: 'ellipsisText',
         component: './200828EllipsisText'
+      },
+      {
+        path: '/daily/20200831',
+        name: 'slideInList',
+        component: './200831SlideInList'
+      },
+      {
+        path: '/daily/20201009',
+        name: 'listSortAnimation',
+        component: './201009SlideSortAnimation'
       }
     ]
   },
