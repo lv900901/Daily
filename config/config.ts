@@ -15,7 +15,7 @@ export default defineConfig({
   layout: {
     name: 'Day Day Up',
     locale: true,
-    siderWidth: 208,
+    siderWidth: 288,
   },
   locale: {
     // default zh-CN

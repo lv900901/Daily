@@ -6,6 +6,7 @@ export default {
   'menu.daily.ellipsisText': '200828-超长文本显示',
   'menu.daily.slideInList': '200831-列表滑入',
   'menu.daily.listSortAnimation': '20201009-列表排序动画',
+  'menu.daily.tableCellUpdate': '20201014-表格单元格更新效果',
   'menu.home': '首页',
   'menu.admin': '管理页',
   'menu.admin.sub-page': '二级管理页',

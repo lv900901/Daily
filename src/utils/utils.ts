@@ -52,6 +52,14 @@ export const Timeout = (callback: Function, count: number) => {
   loop();
 };
 
+export const delay = (count: number) => {
+  return new Promise(resolve => {
+    Timeout(() => {
+      resolve()
+    }, count);
+  })
+};
+
 export class LimitArray {
   length: number = 0;
   line: number = 0;

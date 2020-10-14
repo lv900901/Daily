@@ -42,6 +42,11 @@ export default [
         path: '/daily/20201009',
         name: 'listSortAnimation',
         component: './201009SlideSortAnimation'
+      },
+      {
+        path: '/daily/20201014',
+        name: 'tableCellUpdate',
+        component: './20201014TableCellUpdate'
       }
     ]
   },
