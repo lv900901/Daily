@@ -1,0 +1,48 @@
+.header {
+  display: flex;
+  margin-bottom: 16px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panelContainer {
+  display: flex;
+}
+
+.panelItem {
+  flex: 1;
+  overflow: hidden;
+  .title {
+    margin-bottom: 24px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .panelContent {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .panelHeader {
+    display: inline-block;
+    width: e('calc(100% - 5em)');
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .activeRow {
+    background: #ffd89f;
+  }
+
+  .json {
+    // max-height: 400px;
+    overflow: auto;
+  }
+
+  :global {
+    .icon-container {
+      line-height: 16px;
+    }
+  }
+}

@@ -37,19 +37,35 @@ export const getPageQuery = () => {
   return {};
 };
 
-export const Timeout = (callback: Function, count: number) => {
-  let sum = count;
-  const loop = () => {
+class TimeoutClass {
+  sum: number = 0;
+  cancelFlag: boolean = false;
+  callback;
+  constructor(callback: Function, count: number) {
+    this.sum = count;
+    this.callback = callback;
+    this.loop();
+  }
+  loop = () => {
     requestAnimationFrame(() => {
-      if (!sum--) {
-        sum = null as unknown as number;
-        callback();
+      if (this.cancelFlag) {
+        return;
+      }
+      if (!this.sum--) {
+        this.sum = null as unknown as number;
+        this.callback();
       } else {
-        loop();
+        this.loop();
       }
     })
-  };
-  loop();
+  }
+  cancel = () => {
+    this.cancelFlag = true;
+  }
+}
+
+export const Timeout = (callback: Function, count: number) => {
+  return new TimeoutClass(callback, count);
 };
 
 export const delay = (count: number) => {

@@ -56,6 +56,7 @@ class AnimateItem {
 class PageControll {
   mask: any;
   listItems = new Map();
+  timer: null | any = null;
   constructor() {
 
   }
@@ -98,7 +99,10 @@ export default (): React.ReactNode => {
     // setSortType(e.target.value);
     pageControll.appendItem();
     setStatus(STATUS.BeforeAppear);
-    Timeout(() => {
+    // Timeout.cancel(pageControll.timer);
+    pageControll.timer?.cancel();
+    pageControll.timer = null;
+    pageControll.timer = Timeout(() => {
       setStatus(STATUS.Appearing);
       setSortType(e.target.value);
     }, 1);
@@ -119,11 +123,13 @@ export default (): React.ReactNode => {
   }, [sortType]);
 
   useEffect(() => {
-    Timeout(() => {
+    // Timeout.cancel(pageControll.timer);
+    pageControll.timer?.cancel();
+    pageControll.timer = null;
+    pageControll.timer = Timeout(() => {
       setStatus(STATUS.Finished);
     }, 64);
   }, [sortType]);
-
   return (
     <PageContainer>
       <div className={styles.header}>
@@ -152,7 +158,6 @@ export default (): React.ReactNode => {
         )}
       />
       <div ref={c => pageControll.mask = findDOMNode(c)} className={`${styles.maskContainer} ${status === STATUS.Appearing ? styles.appearing : ''}`}>
-        1234
       </div>
     </PageContainer>
   )

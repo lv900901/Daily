@@ -1,7 +1,7 @@
 
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Typography, Table, Input } from 'antd';
+import { Typography, Table, Input, Tooltip, Divider } from 'antd';
 import { LoadingOutlined, CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { usePersistFn, useCreation } from 'ahooks';
 import { Timeout, delay } from '@/utils/utils';
@@ -14,12 +14,14 @@ interface DefaultKey {
   loading: symbol;
   status: symbol;
   changeFlag: symbol;
+  errorMsg: symbol;
 };
 
 const extraKey: DefaultKey = {
   loading: Symbol('loading'),
   status: Symbol('status'),
-  changeFlag: Symbol('changeFlag')
+  changeFlag: Symbol('changeFlag'),
+  errorMsg: Symbol('errorMsg')
 };
 
 const staticData: any[] = [];
@@ -51,10 +53,59 @@ const listData: any = () => staticData.concat((new Array(10).fill({
   [extraKey.loading]: {},
   [extraKey.status]: {},
   [extraKey.changeFlag]: {},
+  [extraKey.errorMsg]: {},
 }))));
 
+const ErrorTootip = (props: any) => {
+  const { errorMsg, autoCloseSec } = props;
+  const timer: any = useRef(null);
+  const [ visible, setVisible ] = useState(true);
+  const [ closeSec, setCloseSec ] = useState(autoCloseSec || 3);
+  const onVisibleChange = usePersistFn((visible) => {
+    if (!visible) {
+      clearTimeout(timer.current);
+      setTimeout(() => {
+        setCloseSec(0);
+      }, 100);
+    }
+    setVisible(visible);
+  });
+
+  const judgeClose = usePersistFn((count) => {
+    timer.current = setTimeout(() => {
+      const newCount = count - 1;
+      if (newCount !== 0) {
+        setCloseSec(newCount);
+        judgeClose(newCount);
+      } else {
+        setVisible(false);
+        setTimeout(() => {
+          setCloseSec(newCount);
+        }, 100);
+      }
+    }, 1000);
+  });
+
+  useEffect(() => {
+    judgeClose(closeSec)
+  }, []);
+return <Tooltip title={<span>
+    {errorMsg}
+    {
+      closeSec ? <>
+        <Divider style={{ borderLeft: 'solid 1px rgba(255, 255, 255, .6)' }} type="vertical"/>
+        {`${closeSec}s`}
+      </>: null
+    }
+    
+    </span>
+  } color="#eb2f96" onVisibleChange={(newVisible) => onVisibleChange(newVisible)} visible={visible} arrowPointAtCenter placement="topRight">
+  <CloseCircleTwoTone twoToneColor="#eb2f96"/>
+</Tooltip>
+}
+
 const CellUpdate = (props: any) => {
-  const { children, maskAble, fitMargin, position, loading, status } = props;
+  const { children, maskAble, fitMargin, position, loading, status, errorMsg } = props;
   const fitMarginTemp = fitMargin || [];
   const getJSX = () => {
     if (loading) {
@@ -70,7 +121,7 @@ const CellUpdate = (props: any) => {
     } else if (status !== undefined){
       return <span className={styles.status}>
         {
-          status ? <CheckCircleTwoTone twoToneColor="#52c41a"/> : <CloseCircleTwoTone twoToneColor="#eb2f96"/>
+          status ? <CheckCircleTwoTone twoToneColor="#52c41a"/> : <ErrorTootip errorMsg={errorMsg} />
         }
       </span>
     }
@@ -106,9 +157,10 @@ export default (): React.ReactNode => {
     delay(120).then(() => {
       const status = Math.floor(Math.random() * 2);
       record[extraKey.status][key] = status;
-      // if (!status) {
-      //   record[key] = oldValue;
-      // }
+      if (!status) {
+        record[extraKey.errorMsg][key] = "错误信息！";
+        // record[key] = oldValue;
+      }
       record[extraKey.loading][key] = false;
       setDataSource([...dataSource]);
     });
@@ -124,6 +176,7 @@ export default (): React.ReactNode => {
         loading={loading}
         maskAble={false}
         status={record[extraKey.status]['title']}
+        errorMsg={record[extraKey.errorMsg]['title']}
       >
         <Input
           key={Number(loading)}
@@ -143,6 +196,7 @@ export default (): React.ReactNode => {
         fitMargin={[-16, -16, -16, -16]}
         loading={loading}
         status={record[extraKey.status]['hot']}
+        errorMsg={record[extraKey.errorMsg]['hot']}
       >
         <Input
           key={Number(loading)}

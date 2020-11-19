@@ -47,6 +47,29 @@ export default [
         path: '/daily/20201014',
         name: 'tableCellUpdate',
         component: './20201014TableCellUpdate'
+      },
+      {
+        path: '/daily/20201102',
+        name: 'useModal',
+        component: './20201102UseModal'
+      },
+      {
+        path: '/daily/20201112',
+        name: 'panelLinkage',
+        component: './20201112PanelLinkage'
+      }
+    ]
+  },
+  {
+    path: '/study',
+    name: 'study',
+    icon: 'smile',
+    component: './Daily',
+    routes: [
+      {
+        path: '/study/ts',
+        name: 'typescript',
+        component: './Study/TypeScript',
       }
     ]
   },

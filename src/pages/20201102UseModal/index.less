@@ -1,0 +1,59 @@
+.header {
+  display: flex;
+  margin-bottom: 16px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item {
+  background-color: #fff;
+  padding: 16px;
+}
+
+.animating {
+  .item {
+    visibility: hidden;
+  }
+}
+
+.maskContainer {
+  position: fixed;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
+  visibility: hidden;
+
+  &.appearing {
+    visibility: visible;
+  }
+
+  .item {
+    transition: all 1s;
+  }
+}
+
+.container {
+  position: relative;
+}
+
+.mask {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  z-index: 10;
+}
+
+.status {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
