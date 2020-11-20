@@ -3,12 +3,19 @@ import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
+const path = require('path');
 
 const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
   hash: true,
   antd: {},
+  chainWebpack(memo: any, { env, webpack, createCSSRule }: any) {
+    memo.module.rule('swf').test(/\.(swf|ttf|eot|svg|woff(2))(\?[a-z0-9]+)?$/).use('file').loader('url-loader').options({limit: 1024, name: 'file/[path][name].[hash:7].[ext]'});
+    memo.resolve.modules.clear().add(path.resolve('node_modules')).add('node_modules');
+    // memo.plugin('ProvidePlugin').use(new webpack.ProvidePlugin({ videojs: 'video.js' }));
+    console.log(memo.resolve.modules.values());
+  },
   dva: {
     hmr: true,
   },

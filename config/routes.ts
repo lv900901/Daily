@@ -57,6 +57,11 @@ export default [
         path: '/daily/20201112',
         name: 'panelLinkage',
         component: './20201112PanelLinkage'
+      },
+      {
+        path: '/daily/20201120',
+        name: 'videoTypes',
+        component: './20201120VideoSourceChange'
       }
     ]
   },
