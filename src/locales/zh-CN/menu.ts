@@ -10,6 +10,7 @@ export default {
   'menu.daily.useModal': '20201102-弹窗使用心得',
   'menu.daily.panelLinkage': '20201112-左右折叠框联动',
   'menu.daily.videoTypes': '20201120-视频播放源切换',
+  'menu.daily.tableSort': '20210201-表格排序',
   'menu.study': 'Study',
   'menu.study.typescript': 'TypeScript',
   'menu.home': '首页',
